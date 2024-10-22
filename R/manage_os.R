@@ -44,6 +44,7 @@ occluded_surface = function(pdb, method = "FIBOS"){
     if(fs::file_exists(pdb) == FALSE){
       stop("File not Found: ", name_pdb)
     }
+    pdb = fs::path_abs(pdb)
     #pdb_aux = read.pdb(pdb)
     #pdb = name_pdb
     change = TRUE
