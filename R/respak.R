@@ -6,6 +6,9 @@
 #'                areas between the molecules of the analyzed protein.
 #'
 #' @param file Prot File (.srf).
+#' 
+#' @import dplyr
+#' @import stringr
 #'
 #' @seealso [read_prot()]
 #' @seealso [occluded_surface()]
@@ -24,15 +27,22 @@ osp = function(file){
   #if(endsWith(file,".srf")==FALSE){
   #  file = paste(file,".srf",sep = "")
   #}
+  wd = fs::path_wd()
   if(fs::path_ext(file) == ""){
-    file = fs::path_ext_set(file,"pdb")
+    file = fs::path_ext_set(file,"srf")
+  }
+  if(!fs::path_ext(file) == "srf"){
+    stop("Type of File Wrong")
   }
   if(fs::file_exists(file) == FALSE){
     stop("File not Found: ",file)
   }
-  name = file
+  name_prot = file
   if(fs::file_exists(file)){
     if(file!="prot.srf"){
+      fs::file_copy(file,".")
+      file = fs::path_file(file)
+      file = fs::path(wd,file)
       fs::file_move(file,"prot.srf")
       file = "prot.srf"
     }
@@ -72,9 +82,13 @@ osp = function(file){
     }
     osp_data = readr::read_table("prot.pak",show_col_types = FALSE)
     #file = gsub(".srf","",name)
-    file = pdb_name %>% fs::path_file() %>% fs::path_ext_remove()
-    file = paste(file,".pak",sep = "")
+    #file = file %>% fs::path_file() %>% fs::path_ext_remove()
+    name_prot = name_prot %>% fs::path_file() %>% fs::path_ext_remove()
+    name_prot = stringr::str_sub(name_prot, -4)
+    file = paste("respack_",name_prot,sep = "")
+    #file = paste(file,".pak",sep = "")
     #file.rename("prot.srf",name)
+    file = fs::path_ext_set(file,"pak")
     fs::file_move("prot.pak",file)
     return(osp_data)
   }

@@ -69,7 +69,6 @@ execute = function(iresf, iresl, method){
              main_75$natm, PACKAGE = "fibos")
     .Fortran("runSIMS", PACKAGE = "fibos", as.integer(method))
     .Fortran("surfcal", PACKAGE = "fibos")
-    gc()
   }
   .Fortran("main_intermediate02", as.integer(method),PACKAGE = "fibos")
   #if(system_arch["sysname"] == "Linux" || system_arch["sysname"] == "Darwin"){

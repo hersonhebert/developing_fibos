@@ -26,7 +26,7 @@
 #' @export
 occluded_surface = function(pdb, method = "FIBOS"){
   remove_files()
-  origin_pdb = pdb
+  #origin_pdb = pdb
   source_path = fs::path_real(".")
   #fs::file_chmod(source_path,mode = "755")
   change = FALSE
@@ -58,7 +58,7 @@ occluded_surface = function(pdb, method = "FIBOS"){
       fs::file_copy(pdb,dest_temp)
     }
     #fs::file_chmod(dest_temp,mode = "755")
-    pdb = name_pdb
+    #pdb = name_pdb
     #write.pdb(pdb_aux,pdb)
   }
   meth = 0
@@ -79,7 +79,7 @@ occluded_surface = function(pdb, method = "FIBOS"){
   }
   execute(1, iresl, meth)
   remove_files()
-  pdb_name = change_files(name_pdb)
+  name_prot = change_files(name_pdb)
   #arquivos = list.files(dest_temp, full.names = TRUE)
   delete_pdb = fs::dir_ls(dest_temp,glob = "*.pdb")
   fs::file_delete(delete_pdb)
@@ -91,7 +91,8 @@ occluded_surface = function(pdb, method = "FIBOS"){
   fs::file_copy(copy_files,final_dest)
   copy_files = fs::dir_ls(dest_temp,glob = "*.lst")
   fs::file_copy(copy_files,final_dest)
-  return(read_prot(pdb_name))
+  name_prot = fs::path(final_dest,name_pdb)
+  return(read_prot(name_prot))
   })
 }
 
@@ -103,13 +104,13 @@ remove_files = function(){
     files_list = NULL
   }
   #files_list = dir(pattern = "\\.inp")
-  files_fist = fs::dir_ls(glob = "*.inp")
+  files_list = fs::dir_ls(glob = "*.inp")
   if(length(files_list)>0){
     fs::file_delete(files_list)
     files_list = NULL
   }
   #files_list = dir(pattern = "\\.txt")
-  files_fist = fs::dir_ls(glob = "*.txt")
+  files_list = fs::dir_ls(glob = "*.txt")
   if(length(files_list)>0){
     fs::file_delete(files_list)
     files_list = NULL
