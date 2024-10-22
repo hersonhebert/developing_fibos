@@ -92,7 +92,7 @@ occluded_surface = function(pdb, method = "FIBOS"){
   fs::file_copy(copy_files,final_dest)
   copy_files = fs::dir_ls(dest_temp,glob = "*.lst")
   fs::file_copy(copy_files,final_dest)
-  name_prot = fs::path(final_dest,name_pdb)
+  name_prot = fs::path(final_dest,name_prot)
   return(read_prot(name_prot))
   })
 }
