@@ -26,6 +26,7 @@
 #' @export
 occluded_surface = function(pdb, method = "FIBOS"){
   remove_files()
+  origin_pdb = pdb
   source_path = fs::path_real(".")
   #fs::file_chmod(source_path,mode = "755")
   change = FALSE
@@ -64,7 +65,7 @@ occluded_surface = function(pdb, method = "FIBOS"){
   #path = system.file("extdata", "radii", package = "fibos")
   path = fs::path_package("fibos","extdata","radii")
   fs::file_copy(path, dest_temp)
-  interval = clean_pdb(pdb)
+  interval = clean_pdb(origin_pdb)
   iresf = interval[1]
   iresl = interval[2]
   if(toupper(method) == "OS"){
