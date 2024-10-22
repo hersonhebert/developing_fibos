@@ -26,7 +26,7 @@
 #' @export
 occluded_surface = function(pdb, method = "FIBOS"){
   remove_files()
-  #origin_pdb = pdb
+  origin_pdb = pdb
   source_path = fs::path_real(".")
   #fs::file_chmod(source_path,mode = "755")
   change = FALSE
