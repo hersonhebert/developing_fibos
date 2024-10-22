@@ -78,7 +78,7 @@ occluded_surface = function(pdb, method = "FIBOS"){
   }
   execute(1, iresl, meth)
   remove_files()
-  pdb_name = change_files(pdb)
+  pdb_name = change_files(name_pdb)
   #arquivos = list.files(dest_temp, full.names = TRUE)
   delete_pdb = fs::dir_ls(dest_temp,glob = "*.pdb")
   fs::file_delete(delete_pdb)
