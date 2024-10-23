@@ -90,6 +90,8 @@ osp = function(file){
     #file.rename("prot.srf",name)
     file = fs::path_ext_set(file,"pak")
     fs::file_move("prot.pak",file)
+    remove_file = fs::dir_ls(glob = "*.srf")
+    fs::file_delete(remove_file)
     return(osp_data)
   }
   else{
