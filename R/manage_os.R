@@ -37,6 +37,7 @@ occluded_surface = function(pdb, method = "FIBOS"){
     if(fs::file_exists(arq_aux)){
       fs::file_delete(arq_aux)
     }
+    name_pdb = fs::path_ext_set(pdb,"pdb")
   }else{
     #name_pdb = pdb
     #name_pdb = substr(name_pdb, nchar(name_pdb)-7, nchar(name_pdb))
