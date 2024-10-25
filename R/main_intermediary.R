@@ -40,7 +40,7 @@ call_main = function(iresf, iresl, maxres, maxat){
 execute = function(iresf, iresl, method){
   maxres = 10000
   maxat = 50000
-  system_arch_1 = Sys.info()
+  #system_arch_1 = Sys.info()
   #if(system_arch["sysname"] == "Linux" || system_arch["sysname"] == "Darwin"){
   #  dyn.load(system.file("libs", "fibos.so", package = "fibos"))
   #} else if(system_arch["sysname"] == "Windows"){
@@ -50,27 +50,42 @@ execute = function(iresf, iresl, method){
   #    dyn.load(system.file("libs/x86", "fibos.dll", package = "fibos"))
   #  }
   #}
-  if(system_arch_1["sysname"] == "Linux"||system_arch_1["sysname"] == "Darwin"){
+ # if(system_arch_1["sysname"] == "Linux"||system_arch_1["sysname"] == "Darwin"){
     #dyn.load(system.file("libs", "fibos.so", package = "fibos"))
-    dyn.load(fs::path_package("fibos","libs","fibos.so"))
-  } else{
-    path_lib = fs::path("libs",.Platform$r_arch)
-    dyn.load(fs::path_package("fibos",path_lib,"fibos.dll"))
-  }
+  #  dyn.load(fs::path_package("fibos","libs","fibos.so"))
+  #} else{
+  #  path_lib = fs::path("libs",.Platform$r_arch)
+  #  dyn.load(fs::path_package("fibos",path_lib,"fibos.dll"))
+  #}
+  print("Executando a main_75")
   main_75 = call_main(iresf, iresl, maxres, maxat)
+  print("main_75")
+  print(main_75)
+  print("Main_75 calculada")
   for(ires in 1:(iresl)){
     print(ires)
+    print("executando main_intermediate")
+    print("intermediate")
     intermediate = .Fortran("main_intermediate", main_75$x, main_75$y,
                             main_75$z, as.integer(ires), main_75$resnum,
                             main_75$natm, PACKAGE = "fibos")
-    .Fortran("main_intermediate01",x=as.double(rnorm(maxat)),
+    #print(intermediate)
+    print("executando main_intermediate 01")
+    m_intermediate = .Fortran("main_intermediate01",x=as.double(rnorm(maxat)),
              y = as.double(rnorm(maxat)),
              z = as.double(rnorm(maxat)), as.integer(ires), main_75$resnum,
              main_75$natm, PACKAGE = "fibos")
-    .Fortran("runSIMS", PACKAGE = "fibos", as.integer(method))
-    .Fortran("surfcal", PACKAGE = "fibos")
+    #print(m_intermediate)
+    print("executando runSIMS")
+    run = .Fortran("runSIMS", PACKAGE = "fibos", as.integer(method))
+    #print(run)
+    print("executando surfcal")
+    surfcal = .Fortran("surfcal", PACKAGE = "fibos")
+    #print(surfcal)
   }
-  .Fortran("main_intermediate02", as.integer(method),PACKAGE = "fibos")
+  print("executando main_intermediate02")
+  m_int_2 = .Fortran("main_intermediate02", as.integer(method),PACKAGE = "fibos")
+  #print(m_int_2)
   #if(system_arch["sysname"] == "Linux" || system_arch["sysname"] == "Darwin"){
   #  dyn.unload(system.file("libs", "fibos.so", package = "fibos"))
   #} else if(system_arch["sysname"] == "Windows"){
@@ -80,11 +95,11 @@ execute = function(iresf, iresl, method){
   #    dyn.unload(system.file("libs/x86", "fibos.dll", package = "fibos"))
   #  }
   #}
-  if(system_arch_1["sysname"] == "Linux"||system_arch_1["sysname"] == "Darwin"){
+  #if(system_arch_1["sysname"] == "Linux"||system_arch_1["sysname"] == "Darwin"){
     #dyn.load(system.file("libs", "fibos.so", package = "fibos"))
-    dyn.unload(fs::path_package("fibos","libs","fibos.so"))
-  } else{
-    path_lib = fs::path("libs",.Platform$r_arch)
-    dyn.unload(fs::path_package("fibos",path_lib,"fibos.dll"))
-  }
+  #  dyn.unload(fs::path_package("fibos","libs","fibos.so"))
+  #} else{
+  #  path_lib = fs::path("libs",.Platform$r_arch)
+  #  dyn.unload(fs::path_package("fibos",path_lib,"fibos.dll"))
+  #}
 }

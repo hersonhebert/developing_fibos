@@ -31,13 +31,13 @@ clean_pdb = function(pdb){
   fs::file_copy(pdb,"temp1.pdb")
   clean("temp1.pdb")
   system_arch_1 = Sys.info()
-  if(system_arch_1["sysname"] == "Linux"||system_arch_1["sysname"] == "Darwin"){
+  #if(system_arch_1["sysname"] == "Linux"||system_arch_1["sysname"] == "Darwin"){
     #dyn.load(system.file("libs", "fibos.so", package = "fibos"))
-    dyn.load(fs::path_package("fibos","libs","fibos.so"))
-  } else{
-    path_lib = fs::path("libs",.Platform$r_arch)
-    dyn.load(fs::path_package("fibos",path_lib,"fibos.dll"))
-  } 
+  #  dyn.load(fs::path_package("fibos","libs","fibos.so"))
+  #} else{
+  #  path_lib = fs::path("libs",.Platform$r_arch)
+  #  dyn.load(fs::path_package("fibos",path_lib,"fibos.dll"))
+  #} 
     
     #if(system_arch_1["sysname"] == "Windows"){
     #if(system_arch_1["machine"] == "x86-64"){
@@ -48,7 +48,9 @@ clean_pdb = function(pdb){
     #  dyn.load(system.file("libs/x86", "fibos.dll", package = "fibos"))
   #  }
   #}
-  .Fortran("renum", PACKAGE = "fibos")
+  print("renum")
+  renum = .Fortran("renum", PACKAGE = "fibos")
+  print(renum)
   fs::file_move("new.pdb", "temp.pdb")
   fs::file_delete("temp1.cln")
   pdb = bio3d::read.pdb("temp.pdb")
@@ -69,13 +71,13 @@ clean_pdb = function(pdb){
   #    dyn.unload(system.file("libs/x86", "fibos.dll", package = "fibos"))
   #  }
   #}
-  if(system_arch_1["sysname"] == "Linux"||system_arch_1["sysname"] == "Darwin"){
+  #if(system_arch_1["sysname"] == "Linux"||system_arch_1["sysname"] == "Darwin"){
     #dyn.load(system.file("libs", "fibos.so", package = "fibos"))
-    dyn.unload(fs::path_package("fibos","libs","fibos.so"))
-  } else{
-    path_lib = fs::path("libs",.Platform$r_arch)
-    dyn.unload(fs::path_package("fibos",path_lib,"fibos.dll"))
-  }
+  #  dyn.unload(fs::path_package("fibos","libs","fibos.so"))
+  #} else{
+  #  path_lib = fs::path("libs",.Platform$r_arch)
+  #  dyn.unload(fs::path_package("fibos",path_lib,"fibos.dll"))
+  #}
   fs::file_delete("temp1.pdb")
   return(interval)
 }
