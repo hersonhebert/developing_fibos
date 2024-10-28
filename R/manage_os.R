@@ -98,7 +98,9 @@ occluded_surface = function(pdb, method = "FIBOS", verbose = FALSE){
     if(!(toupper(method) == "OS")&!(toupper(method) == "FIBOS")){
       stop("Wrong Method")
     }
-    print("Inicio da série de cálculos...")
+    if(verbose == TRUE){
+      print("Inicio da série de cálculos.")
+    }
     execute(1, iresl, meth, verbose)
     if(verbose == TRUE){
       print("Descarregando Fortran.")
