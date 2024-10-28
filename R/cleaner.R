@@ -20,37 +20,15 @@
 #' @importFrom readr read_file
 #'
 clean_pdb = function(pdb){
-   #if(!grepl(".pdb",pdb)){
    if(fs::path_ext(pdb) == "")
      if (!fs::file_exists(pdb)){
        bio3d::get.pdb(pdb)
-       #pdb = paste(pdb,".pdb",sep = "")
        pdb = fs::path_ext_set(pdb,"pdb")
      }
-   #}
   fs::file_copy(pdb,"temp1.pdb")
   clean("temp1.pdb")
   system_arch_1 = Sys.info()
-  #if(system_arch_1["sysname"] == "Linux"||system_arch_1["sysname"] == "Darwin"){
-    #dyn.load(system.file("libs", "fibos.so", package = "fibos"))
-  #  dyn.load(fs::path_package("fibos","libs","fibos.so"))
-  #} else{
-  #  path_lib = fs::path("libs",.Platform$r_arch)
-  #  dyn.load(fs::path_package("fibos",path_lib,"fibos.dll"))
-  #} 
-    
-    #if(system_arch_1["sysname"] == "Windows"){
-    #if(system_arch_1["machine"] == "x86-64"){
-      #dyn.load(system.file("libs/x64", "fibos.dll", package = "fibos"))
-    #  dyn.load(fs::path_package("fibos","libs/x64","fibos.dll"))
-    #} else{
-    #  path_li
-    #  dyn.load(system.file("libs/x86", "fibos.dll", package = "fibos"))
-  #  }
-  #}
-  print("renum")
   renum = .Fortran("renum", PACKAGE = "fibos")
-  print(renum)
   fs::file_move("new.pdb", "temp.pdb")
   fs::file_delete("temp1.cln")
   pdb = bio3d::read.pdb("temp.pdb")
@@ -62,22 +40,6 @@ clean_pdb = function(pdb){
   iresf = as.integer(pdb$atom$resno[1])
   iresl = as.integer(pdb$atom$resno[length(pdb$atom$resno)])
   interval = c(iresf,iresl)
-  #if(system_arch_1["sysname"] == "Linux"||system_arch_1["sysname"] == "Darwin"){
-  #  dyn.unload(system.file("libs", "fibos.so", package = "fibos"))
-  #} else if(system_arch_1["sysname"] == "Windows"){
-  #  if(system_arch_1["machine"] == "x86-64"){
-  #    dyn.unload(system.file("libs/x64", "fibos.dll", package = "fibos"))
-  #  } else{
-  #    dyn.unload(system.file("libs/x86", "fibos.dll", package = "fibos"))
-  #  }
-  #}
-  #if(system_arch_1["sysname"] == "Linux"||system_arch_1["sysname"] == "Darwin"){
-    #dyn.load(system.file("libs", "fibos.so", package = "fibos"))
-  #  dyn.unload(fs::path_package("fibos","libs","fibos.so"))
-  #} else{
-  #  path_lib = fs::path("libs",.Platform$r_arch)
-  #  dyn.unload(fs::path_package("fibos",path_lib,"fibos.dll"))
-  #}
   fs::file_delete("temp1.pdb")
   return(interval)
 }
