@@ -25,6 +25,9 @@
 #' @export
 osp = function(file){
   wd = fs::path_wd()
+  if(!fs::dir_exists("fibos_files")){
+    fs::dir_create("fibos_files")
+  }
   if(fs::path_ext(file) == ""){
     file = fs::path_ext_set(file,"srf")
   }
@@ -59,13 +62,16 @@ osp = function(file){
       dyn.unload(fs::path_package("fibos",path_lib,"fibos.dll"))
     }
     osp_data = readr::read_table("prot.pak",show_col_types = FALSE)
-    name_prot = name_prot %>% fs::path_file() %>% fs::path_ext_remove()
+    name_prot = fs::path_file(name_prot) 
+    name_prot = fs::path_ext_remove(name_prot)
     name_prot = stringr::str_sub(name_prot, -4)
     file = paste("respack_",name_prot,sep = "")
     file = fs::path_ext_set(file,"pak")
     fs::file_move("prot.pak",file)
     remove_file = fs::dir_ls(glob = "*.srf")
     fs::file_delete(remove_file)
+    fs::file_copy(file,"fibos_files", overwrite = TRUE)
+    fs::file_delete(file)
     return(osp_data)
   }
   else{
