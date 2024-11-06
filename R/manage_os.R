@@ -151,7 +151,7 @@ occluded_surface = function(pdb, method = "FIBOS", verbose = FALSE){
     if(verbose == TRUE){
       print("Retornando tabela")
     }
-    return(read_prot(name_prot))
+    return("Terminado")
   #})
 }
 
