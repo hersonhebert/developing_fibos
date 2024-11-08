@@ -17,6 +17,7 @@
 #' @importFrom stringr str_sub
 #' @importFrom withr with_tempdir
 #' @importFrom bio3d read.pdb
+#' @import fs
 #'
 #' @author Carlos Henrique da Silveira (carlos.silveira@unifei.edu.br)
 #' @author Herson Hebert Mendes Soares (hersonhebert@hotmail.com)
@@ -64,7 +65,7 @@ occluded_surface = function(pdb, method = "FIBOS", verbose = FALSE){
   if(!fs::dir_exists("fibos_files")){
     fs::dir_create("fibos_files")
   }
-  #withr::with_tempdir({
+  withr::with_tempdir({
     if(verbose == TRUE){
       print("Inicio do WD temporario...")
     }
@@ -101,6 +102,7 @@ occluded_surface = function(pdb, method = "FIBOS", verbose = FALSE){
     if(verbose == TRUE){
       print("Inicio da série de cálculos.")
     }
+    
     execute(1, iresl, meth, verbose)
     if(verbose == TRUE){
       print("Descarregando Fortran.")
@@ -117,6 +119,8 @@ occluded_surface = function(pdb, method = "FIBOS", verbose = FALSE){
         print("Descarregando fibos.dll.")
       }
     }
+    gc()
+    '
     if(verbose == TRUE){
       print("Removendo arquivos.")
     }
@@ -151,8 +155,9 @@ occluded_surface = function(pdb, method = "FIBOS", verbose = FALSE){
     if(verbose == TRUE){
       print("Retornando tabela")
     }
-    return("Terminado")
-  #})
+    return(read_prot(name_prot))
+    '
+  })
 }
 
 remove_files = function(){
