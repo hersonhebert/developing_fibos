@@ -54,9 +54,8 @@ execute = function(iresf, iresl, method, verbose){
       print("executando main_intermediate")
     }
     .Fortran("main_intermediate", main_75$x, main_75$y,
-                            main_75$z, as.integer(ires), main_75$resnum,
+                            main_75$z, ires, main_75$resnum,
                             main_75$natm, PACKAGE = "fibos")
-    Sys.sleep(0.01)
     '
     if(verbose == TRUE){
       print("Executando main_intermediate 01")

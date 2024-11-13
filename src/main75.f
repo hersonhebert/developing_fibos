@@ -36,27 +36,28 @@ c********************************************************************
        character*60 infile
        character*130 cmd
        character atype(maxat)*4
-       character restype(maxat)*3      !read_coords
-       character chain(maxres)*1			!read_coords
+       character restype(maxat)*3
+       character chain(maxres)*1
        character aarestype(maxres)*3
-       character rayflag	!Flag for ray printing from surfcal
-				!Should by y or n
+       character rayflag
+
 
        integer resnum(maxres), nchains, aa_per_chain,
-     & canum(maxres), natm      !see read_coords
-       integer iresf,iresl      !first and last residue to calculate
-       integer naa                      !number of residues
-       integer ires                     !residue of interest
+     & canum(maxres)
+       integer iresf,iresl
+       integer naa
+       integer ires
        integer number
        integer kanala, kanalr
        integer max
+       integer, intent(inout) :: natm
 
-       real x(3,maxat)          !see read_coords
+       real x(3,maxat)
        double precision a(maxat)
        double precision b(maxat)
        double precision c(maxat)
 
-c20     format('   Residue(s) to calculate not in PDB file.')
+20     format('   Residue(s) to calculate not in PDB file.')
 
         do i = 1,maxres
             chain(i) = ""
@@ -92,7 +93,7 @@ c        iresl = 76
 
 c Read flag for printing of rays
 c       read(5,10) rayflag
-        rayflag = "n"
+        rayflag = "y"
 
 c Open pdb file as unit=1
        open (unit=1, file="temp.pdb", status='old')
@@ -110,9 +111,9 @@ c Close pdb file
 
 c Check that range of interest is in pdb file
        if (iresf .lt. resnum(1)) then
-c         write(6,20)
+         write(6,20)
        else if (iresl .gt. resnum(natm)) then
-c         write(6,20)
+         write(6,20)
        end if
 
        open(unit = kanala, file = 'atype.txt', status = 'unknown')
@@ -120,7 +121,7 @@ c         write(6,20)
         if(atype(I)/="") then 
            write(kanala,'(a)')atype(I)
         end if
-       end do!I
+       end do
        close(kanala)
 
        open(unit = kanala, file = 'restype.txt', status = 'unknown')
@@ -128,7 +129,7 @@ c         write(6,20)
         if(restype(I)/="") then
            write(kanala,'(a)')restype(I)
         end if
-       end do!I
+       end do
        close(kanala)
 
        open(unit = kanala, file = 'chain.txt', status = 'unknown')
@@ -136,7 +137,7 @@ c         write(6,20)
         if(chain(I)/="")then
           write(kanala,'(a)')chain(I)
         end if
-       end do!I
+       end do
        close(kanala)
 
        open(unit = kanala, file = 'aarestype.txt', status = 'unknown')
@@ -144,7 +145,7 @@ c         write(6,20)
         if(aarestype(I)/="") then
           write(kanala,'(a)')aarestype(I)
         end if
-       end do!I
+       end do
        
        close(kanala)
        
@@ -159,7 +160,7 @@ c         write(6,20)
 c--------------------------------------------------------------------
         subroutine main_intermediate(a, b, c, ires, resnum, natm)
             
-            parameter (maxat=50000, maxres=10000)
+            parameter (maxat=2000, maxres=1000)
             
             double precision a(maxat)
             double precision b(maxat)
@@ -171,7 +172,7 @@ c--------------------------------------------------------------------
             integer resnum(maxres)
             integer natm, I, stat
 
-            character atype(maxat)*4, restype(maxat)*3      !read_coords
+            character atype(maxat)*4, restype(maxat)*3
             character aarestype(maxres)*3
             character chain(maxres)*1
 
@@ -184,46 +185,49 @@ c--------------------------------------------------------------------
 
 c           Write pdb records for residue of interest
 
+c            open(unit=99, file="output.log", status="replace")
             open(unit = kanala, file = "atype.txt", status="old")
+            stat = 1
             I = 1
             do while ((stat >= 0) .and. (I <= maxat))
                 read(kanala,'(a)', iostat=stat)atype(I)
+c                write(99, *) stat
                 I = I+1
-            end do!I
+            end do
             close(kanala)
+c            close(99)
+          
+C            open(unit = kanala, file = "restype.txt", status="old")
+C            I = 1
+C            stat = 1
+C            do while ((stat >= 0) .and. (I <= maxat))
+C                read(kanala,'(a)', iostat=stat)restype(I)
+C                I = I+1
+C            end do
 
-            open(unit = kanala, file = "restype.txt", status="old")
-            I = 1
-            stat = 1
-            do while ((stat >= 0) .and. (I <= maxat))
-                read(kanala,'(a)', iostat=stat)restype(I)
-                I = I+1
-            end do!I
-            close(kanala)
+c            open(unit = kanala, file = "chain.txt", status="old")
+c            I = 1
+c            stat = 1
+c            do while ((stat >= 0) .and. (I <= maxres))
+c                read(kanala,'(a)', iostat=stat)chain(I)
+c                I = I+1
+c            end do
+c            close(kanala)
 
-            open(unit = kanala, file = "chain.txt", status="old")
-            I = 1
-            stat = 1
-            do while ((stat >= 0) .and. (I <= maxres))
-                read(kanala,'(a)', iostat=stat)chain(I)
-                I = I+1
-            end do!I
-            close(kanala)
-
-            open(unit = kanala, file = "aarestype.txt", status="old")
-            I = 1
-            stat = 1
-            do while ((stat >= 0) .and. (I <= maxres))
-                read(kanala,'(a)', iostat=stat)aarestype(I)
-                I = I+1
-            end do!I
-            close(kanala)
+c            open(unit = kanala, file = "aarestype.txt", status="old")
+c            I = 1
+c            stat = 1
+c            do while ((stat >= 0) .and. (I <= maxres))
+c                read(kanala,'(a)', iostat=stat)aarestype(I)
+c                I = I+1
+c            end do
+c            close(kanala)
 c Write pdb records for residue of interest
-         call wrtresi (ires,atype,restype,chain,resnum,x,natm,
-     &   maxat,maxres)
+c         call wrtresi (ires,atype,restype,chain,resnum,x,natm,
+c     &   maxat,maxres)
 c Write pdb records for rest of protein
-         call wrtresj (ires,atype,restype,chain,resnum,x,natm,
-     &   maxat,maxres)
+c         call wrtresj (ires,atype,restype,chain,resnum,x,natm,
+c     &   maxat,maxres)
 
         end
 c--------------------------------------------------------------------
@@ -234,20 +238,20 @@ c--------------------------------------------------------------------
 
        character*60 infile
        character*130 cmd
-       character atype(maxat)*4, restype(maxat)*3      !read_coords
-       character chain(maxres)*1            !read_coords
+       character atype(maxat)*4, restype(maxat)*3
+       character chain(maxres)*1
        character aarestype(maxres)*3
-       character rayflag    !Flag for ray printing from surfcal
-                !Should by y or n
+       character rayflag
+
 
        integer resnum(maxres), nchains, aa_per_chain,
-     & canum(maxres), natm      !see read_coords
-       integer iresf,iresl      !first and last residue to calculate
-       integer naa                      !number of residues
-       integer ires                     !residue of interest
+     & canum(maxres), natm
+       integer iresf,iresl
+       integer naa
+       integer ires
        integer number, stat
 
-       real x(3,maxat)          !see read_coords
+       real x(3,maxat)
        double precision a(maxat)
        double precision b(maxat)
        double precision c(maxat)
@@ -278,7 +282,7 @@ c--------------------------------------------------------------------
         do while ((stat >= 0) .and. (I <= maxat))
             read(kanala,'(a)', iostat=stat)atype(I)
             I = I+1
-        end do!I
+        end do
         close(kanala)
 
         open(unit = kanala, file = "restype.txt", status="old")
@@ -287,7 +291,7 @@ c--------------------------------------------------------------------
         do while ((stat >= 0) .and. (I <= maxat))
             read(kanala,'(a)', iostat=stat)restype(I)
             I = I+1
-        end do!I
+        end do
         close(kanala)
 
         open(unit = kanala, file = "chain.txt", status="old")
@@ -296,7 +300,7 @@ c--------------------------------------------------------------------
         do while ((stat >= 0) .and. (I <= maxres))
             read(kanala,'(a)', iostat=stat)chain(I)
             I = I+1
-        end do!I
+        end do
         close(kanala)
 
         open(unit = kanala, file = "aarestype.txt", status="old")
@@ -305,11 +309,11 @@ c--------------------------------------------------------------------
         do while ((stat >= 0) .and. (I <= maxres))
             read(kanala,'(a)', iostat=stat)aarestype(I)
             I = I+1
-        end do!I
+        end do
         close(kanala)
 
 
-        rayflag="n"
+        rayflag="y"
 c Prepare input for ray analysis
          open(unit=9,file='part.inp',status='unknown')
 
@@ -356,15 +360,15 @@ c And close the input for surfcal
 
 c--------------------------------------------------------------------
     
-       subroutine main_intermediate02
+c       subroutine main_intermediate02
 
-        character*130 cmd
+c        character*130 cmd
 
 c Copy results for this residue into the .srf file
-          cmd = 'cat file.srf >> prot.srf'
-          call system(cmd)
+c          cmd = 'cat file.srf >> prot.srf'
+c          call system(cmd)
 
-       end
+c       end
 
 c***********************************************************************
 
@@ -389,9 +393,9 @@ c      parameter (maxat=50000, maxres=10000)
 
        real x(3,maxat)
 
-       character atype(maxat)*4      !atype of record number
-       character restype(maxat)*3    !restype of record number
-       character aarestype(maxres)*3 !restype of res number
+       character atype(maxat)*4
+       character restype(maxat)*3
+       character aarestype(maxres)*3
        character chain(maxres)*1
        character*80 line
 
@@ -455,9 +459,9 @@ c                 write(6,35)
                naa = naa + 1
 c Look for CA
                if (atype(n) .eq. ' CA ') then
-                  canum(naa)=n     !gives atom number of CA
+                  canum(naa)=n
                end if
-               aarestype(resnum(n))=restype(n) !3-letter code
+               aarestype(resnum(n))=restype(n)
                if (naa .gt. maxres)then
                  write(6,25)
                  goto 999
@@ -511,9 +515,9 @@ c Initialize
        end do
  100    continue
 
-       if (looking) then        !target not found
+       if (looking) then
          error = .true.
-       else                     !found target, repostion file pointer
+       else
          error = .false.
          backspace (lunit)
        end if
