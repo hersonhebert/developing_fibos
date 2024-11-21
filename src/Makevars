@@ -1,26 +1,5 @@
-# Configuração para Windows no Makevars.win
-
-# Definindo o compilador Fortran
-FC = gfortran
-F77 = gfortran
-
-# Diretório onde o gfortran está instalado pelo Rtools ou outra instalação (ajustar conforme necessário)
-# Exemplo: C:/rtools40/usr/bin/
-FC_PATH = C:/rtools40/usr/bin/
-
-# Incluindo o diretório do compilador no PATH
-PATH := $(FC_PATH);$(PATH)
-
-# Flags de otimização para desempenho e estabilidade no Windows
-# -O2 para otimização geral
-# -ffast-math para operações matemáticas rápidas (use com cautela)
-# -march=native para otimização específica do processador local
-FCFLAGS = -O2 -ffast-math -march=native
-F77FLAGS = $(FCFLAGS)
-
-# Flags de link para Fortran (se houver dependências específicas)
-FLIBS = -lgfortran
-
-# Definindo o caminho completo para o compilador
-FC := $(FC_PATH)$(FC)
-F77 := $(FC_PATH)$(F77)
+ifeq ($(shell uname), Darwin)
+    FC=/opt/homebrew/bin/gfortran
+    F77=/opt/homebrew/bin/gfortran
+    FLIBS=-L/opt/homebrew/opt/gfortran/lib/gcc/current -lgfortran
+endif

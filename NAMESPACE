@@ -3,7 +3,6 @@
 export(occluded_surface)
 export(osp)
 import(dplyr)
-import(fs)
 import(stringr)
 importFrom(bio3d,get.pdb)
 importFrom(bio3d,read.pdb)

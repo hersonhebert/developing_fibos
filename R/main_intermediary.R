@@ -47,16 +47,13 @@ execute = function(iresf, iresl, method, verbose){
   if(verbose == TRUE){
     print("Main_75 calculada")
   }
-  print(iresl)
   for(ires in 1:(iresl)){
-    print(ires)
     if(verbose == TRUE){
       print("executando main_intermediate")
     }
-    .Fortran("main_intermediate", main_75$x, main_75$y,
-                            main_75$z, ires, main_75$resnum,
+    intermediate = .Fortran("main_intermediate", main_75$x, main_75$y,
+                            main_75$z, as.integer(ires), main_75$resnum,
                             main_75$natm, PACKAGE = "fibos")
-    '
     if(verbose == TRUE){
       print("Executando main_intermediate 01")
     }
@@ -64,12 +61,10 @@ execute = function(iresf, iresl, method, verbose){
              y = as.double(rnorm(maxat)),
              z = as.double(rnorm(maxat)), as.integer(ires), main_75$resnum,
              main_75$natm, PACKAGE = "fibos")
-    
     if(verbose == TRUE){
       print("Executando runSIMS")
     }
     .Fortran("runSIMS", PACKAGE = "fibos", as.integer(method))
-    
     if(verbose == TRUE){
       print("Executando surfcal")
     }
@@ -79,7 +74,4 @@ execute = function(iresf, iresl, method, verbose){
     print("Executando main_intermediate02")
   }
   .Fortran("main_intermediate02", as.integer(method),PACKAGE = "fibos")
-  '
-  }
-  
 }
