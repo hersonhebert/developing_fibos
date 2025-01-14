@@ -1,5 +1,8 @@
-ifeq ($(shell uname), Darwin)
-    FC=/opt/homebrew/bin/gfortran
-    F77=/opt/homebrew/bin/gfortran
-    FLIBS=-L/opt/homebrew/opt/gfortran/lib/gcc/current -lgfortran
-endif
+PKG_LIBS = $(FLIBS)
+
+# Não sobrescrever flags do sistema
+PKG_FFLAGS = $(FPICFLAGS)
+
+# Usar variáveis do R para compilação
+FC = $(F77)
+FFLAGS = $(F77FLAGS)

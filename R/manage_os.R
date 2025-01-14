@@ -16,19 +16,19 @@
 #' 	\item{\code{ATOM}}{the atomic contacts for each atom.}
 #' 	\item{\code{NUMBER OF POINTS}}{the number of dots (patches of area) on atomic surface.}
 #' 	\item{\code{AREA}}{the summed areas of dots.}
-#'  \item{\code{RAYLENGTH}}{the average lengths of normals normalized by 2.8 Å (water diameter). So, raylen is a value between 0 and 1. A raylen close to 1 indicates worse packaging.}
-#'  \item{\code{DISTANCE}}{the average distances of contacts in (Å).}
+#'  \item{\code{RAYLENGTH}}{the average lengths of normals normalized by 2.8 \eqn{\AA} (water diameter). So, raylen is a value between 0 and 1. A raylen close to 1 indicates worse packaging.}
+#'  \item{\code{DISTANCE}}{the average distances of contacts in (\eqn{\AA}).}
 #'
 #' @seealso [osp]
 #'
-#' @author Herson Soares, João Romanelli, Patrick Fleming, Carlos Silveira.
+#' @author Herson Soares, Joao Romanelli, Patrick Fleming, Carlos Silveira.
 #'
 #' @references
-#' Fleming PJ, Richards FM. Protein packing: Dependence on protein size, secondary structure and amino acid composition. J Mol Biol 2000;299:487–98.(\url{https://doi.org/10.1006/jmbi.2000.3750})
+#' Fleming PJ, Richards FM. Protein packing: Dependence on protein size, secondary structure and amino acid composition. J Mol Biol 2000;299:487-98.(\doi{https://doi.org/10.1006/jmbi.2000.3750})
 #'
-#' Pattabiraman N, Ward KB, Fleming PJ. Occluded molecular surface: Analysis of protein packing. J Mol Recognit 1995;8:334–44. (\url{https://doi.org/10.1002/jmr.300080603})
+#' Pattabiraman N, Ward KB, Fleming PJ. Occluded molecular surface: Analysis of protein packing. J Mol Recognit 1995;8:334-44. (\doi{https://doi.org/10.1002/jmr.300080603})
 #'
-#' Herson H. M. Soares, João P. R. Romanelli, Patrick J. Fleming, Carlos H. da Silveira. bioRxiv, 2024.11.01.621530. (\url{https://doi.org/10.1101/2024.11.01.621530})
+#' Herson H. M. Soares, Joao P. R. Romanelli, Patrick J. Fleming, Carlos H. da Silveira. bioRxiv, 2024.11.01.621530. (\doi{https://doi.org/10.1101/2024.11.01.621530})
 #'
 #' @examples
 #' library(fibos)
@@ -101,7 +101,7 @@ occluded_surface = function(pdb, method = "FIBOS", verbose = FALSE){
     }
     interval = clean_pdb(pdb)
     if(verbose == TRUE){
-      print("Reestruturação do PDB")
+      print("Reestruturando o PDB")
     }
     iresf = interval[1]
     iresl = interval[2]
@@ -115,7 +115,7 @@ occluded_surface = function(pdb, method = "FIBOS", verbose = FALSE){
       stop("Wrong Method")
     }
     if(verbose == TRUE){
-      print("Inicio da série de cálculos.")
+      print("Calculando.")
     }
     execute(1, iresl, meth, verbose)
     if(verbose == TRUE){

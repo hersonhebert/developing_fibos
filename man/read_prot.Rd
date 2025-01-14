@@ -3,9 +3,6 @@
 \name{read_prot}
 \alias{read_prot}
 \title{Prot Reading}
-\usage{
-read_prot(file)
-}
 \arguments{
 \item{file}{Path or name of prot file.}
 }
@@ -21,19 +18,12 @@ calculated using the OS or FIBOS methodology. The input parameter
 is the name of the file "prot.srf" or the directory path where it is
 located."
 }
-\seealso{
-\code{\link[=occluded_surface]{occluded_surface()}}
-
-\code{\link[=osp]{osp()}}
-
-\code{\link[=read_osp]{read_osp()}}
-}
 \author{
 Carlos Henrique da Silveira (carlos.silveira@unifei.edu.br)
 
 Herson Hebert Mendes Soares (hersonhebert@hotmail.com)
 
-João Paulo Roquim Romanelli (joaoromanelli@unifei.edu.br)
+Joao Paulo Roquim Romanelli (joaoromanelli@unifei.edu.br)
 
 Patrick Fleming (Pat.Fleming@jhu.edu)
 }

@@ -7,6 +7,9 @@
 \usage{
 change_files(pdb_name)
 }
+\arguments{
+\item{pdb_name}{PDB File name}
+}
 \description{
 Function for creating folders and manipulating files in the FIBOS system.
 }
@@ -15,7 +18,7 @@ Carlos Henrique da Silveira (carlos.silveira@unifei.edu.br)
 
 Herson Hebert Mendes Soares (hersonhebert@hotmail.com)
 
-João Paulo Roquim Romanelli (joaoromanelli@unifei.edu.br)
+Joao Paulo Roquim Romanelli (joaoromanelli@unifei.edu.br)
 
 Patrick Fleming (Pat.Fleming@jhu.edu)
 }

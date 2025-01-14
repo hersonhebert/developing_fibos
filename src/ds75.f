@@ -3855,7 +3855,8 @@ c
 
 	implicit none
 
-	integer N, kanalz
+	integer N
+	integer:: kanalz=140
 	real*8 RI
         REAL*8 U(3,*)
 	real*8 AR(*),TET(*)
@@ -3987,7 +3988,8 @@ c
         SUBROUTINE GENUN02(RI,U,AR,NCHI,N,NC)
 
 	implicit none
-	integer N,NC, kanalz
+	integer N,NC
+	integer::kanalz=140
 
 	REAL*8 RI
         REAL*8 U(3,NC,N)
@@ -4249,7 +4251,7 @@ c
             integer k
             real phi_1, phi_2
             real area_dot
-            integer kanalz
+            integer::kanalz=140
             out_xyz = .true.
             area_dot = (4*pi*RI**2)/N
 

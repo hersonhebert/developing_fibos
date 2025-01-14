@@ -1,0 +1,15 @@
+PKG_FFLAGS = $(FPICFLAGS)
+PKG_LIBS = $(FLIBS)
+
+# Configurações específicas para Windows
+FC = $(R_HOME)/bin$(R_ARCH_BIN)/Rscript.exe \
+    -e "cat(file.path(R.home('bin'), 'x64', 'gfortran.exe'))"
+FFLAGS = -O2
+
+# Regras para compilar arquivos Fortran
+%.o: %.f
+	$(FC) $(FFLAGS) $(PKG_FFLAGS) -c $< -o $@
+
+# Limpeza
+clean:
+	rm -f *.o *.dll

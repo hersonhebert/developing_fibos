@@ -11,7 +11,7 @@
 #'
 #' @author Carlos Henrique da Silveira (carlos.silveira@unifei.edu.br)
 #' @author Herson Hebert Mendes Soares (hersonhebert@hotmail.com)
-#' @author João Paulo Roquim Romanelli (joaoromanelli@unifei.edu.br)
+#' @author Joao Paulo Roquim Romanelli (joaoromanelli@unifei.edu.br)
 #' @author Patrick Fleming (Pat.Fleming@jhu.edu)
 #'
 #' @importFrom bio3d get.pdb

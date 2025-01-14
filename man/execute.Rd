@@ -25,19 +25,12 @@ execution, the "prot.srf" file is generated, and returned for
 the function. The data in this file refers to all contacts
 between atoms of molecules present in a protein's PDB.
 }
-\seealso{
-\code{\link[=read_prot]{read_prot()}}
-
-\code{\link[=read_osp]{read_osp()}}
-
-\code{\link[=occluded_surface]{occluded_surface()}}
-}
 \author{
 Carlos Henrique da Silveira (carlos.silveira@unifei.edu.br)
 
 Herson Hebert Mendes Soares (hersonhebert@hotmail.com)
 
-João Paulo Roquim Romanelli (joaoromanelli@unifei.edu.br)
+Joao Paulo Roquim Romanelli (joaoromanelli@unifei.edu.br)
 
 Patrick Fleming (Pat.Fleming@jhu.edu)
 }

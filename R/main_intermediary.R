@@ -14,15 +14,12 @@
 #' @param maxres Maximum number of residues.
 #' @param maxat Maximum number of atoms.
 #'
-#' @seealso [read_prot()]
-#' @seealso [read_osp()]
-#' @seealso [occluded_surface()]
 #'
 #' @importFrom stats rnorm
 #'
 #' @author Carlos Henrique da Silveira (carlos.silveira@unifei.edu.br)
 #' @author Herson Hebert Mendes Soares (hersonhebert@hotmail.com)
-#' @author João Paulo Roquim Romanelli (joaoromanelli@unifei.edu.br)
+#' @author Joao Paulo Roquim Romanelli (joaoromanelli@unifei.edu.br)
 #' @author Patrick Fleming (Pat.Fleming@jhu.edu)
 
 #'
