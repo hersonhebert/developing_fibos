@@ -39,7 +39,7 @@
 #'
 #' # Calculate OSP metric per residue from .srf file in fibos_files folder
 #' pdb_osp <- osp(fs::path("fibos_files","prot_1fib.srf"))
-#'
+#' 
 #' @export
 occluded_surface = function(pdb, method = "FIBOS", verbose = FALSE){
   if(verbose == TRUE){
