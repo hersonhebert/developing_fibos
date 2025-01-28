@@ -11,18 +11,18 @@ extern void F77_NAME(main_intermediate02)(int *);
 extern void F77_NAME(runsims)(int *);
 extern void F77_NAME(surfcal)(void);
 extern void F77_NAME(renum)(void);
-extern void F77_NAME(main)(int *, int *, double *, double *, double *, int *, int *, char *, char *, char *, char *);
+extern void F77_NAME(main)(int *, int *, double *, double *, double *, int *, int *);
 extern void F77_NAME(respak)(void);
 
 /* Tabela de registro das funções Fortran */
 static const R_FortranMethodDef FortranEntries[] = {
-  {"main_intermediate",   (DL_FUNC) &F77_NAME(main_intermediate),  10},
+  {"main_intermediate",   (DL_FUNC) &F77_NAME(main_intermediate),   6},
   {"main_intermediate01", (DL_FUNC) &F77_NAME(main_intermediate01), 6},
   {"main_intermediate02", (DL_FUNC) &F77_NAME(main_intermediate02), 1},
   {"runSIMS",             (DL_FUNC) &F77_NAME(runsims),            1},
   {"surfcal",             (DL_FUNC) &F77_NAME(surfcal),            0},
   {"renum",               (DL_FUNC) &F77_NAME(renum),              0},
-  {"main",                (DL_FUNC) &F77_NAME(main),              11},
+  {"main",                (DL_FUNC) &F77_NAME(main),               7},
   {"respak",              (DL_FUNC) &F77_NAME(respak),             0},
   {NULL, NULL, 0}
 };
