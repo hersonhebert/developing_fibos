@@ -1,9 +1,11 @@
 PKG_FFLAGS = $(FPICFLAGS)
 PKG_LIBS = $(FLIBS)
 
-# Windows-specific settings
 FC = gfortran
-FFLAGS = -O2 -fno-second-underscore -fbounds-check -fbacktrace
+FFLAGS = -O2 -fno-second-underscore -fbacktrace
 
 %.o: %.f
 	$(FC) $(FFLAGS) $(PKG_FFLAGS) -c $< -o $@
+
+# For Windows compilation
+PKG_CFLAGS = $(CFLAGS)

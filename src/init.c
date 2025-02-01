@@ -1,7 +1,7 @@
 #include <R.h>
 #include <Rinternals.h>
 #include <R_ext/Rdynload.h>
-#include <stdlib.h> // for NULL
+#include <stdlib.h>
 #include <R_ext/Visibility.h>
 
 /* Declarações das funções Fortran */
@@ -11,7 +11,10 @@ extern void F77_NAME(main_intermediate02)(int *);
 extern void F77_NAME(runsims)(int *);
 extern void F77_NAME(surfcal)(void);
 extern void F77_NAME(renum)(void);
-extern void F77_NAME(main)(int *, int *, double *, double *, double *, int *, int *);
+extern void F77_NAME(main)(int *resnum, int *natm, double *x, double *y, double *z,
+                     char *atype, char *restype, char *chain, char *aarestype,
+                     int *iresf, int *iresl, int *atype_len, int *restype_len,
+                     int *chain_len, int *aarestype_len);
 extern void F77_NAME(respak)(void);
 
 /* Tabela de registro das funções Fortran */
@@ -22,7 +25,7 @@ static const R_FortranMethodDef FortranEntries[] = {
   {"runSIMS",             (DL_FUNC) &F77_NAME(runsims),            1},
   {"surfcal",             (DL_FUNC) &F77_NAME(surfcal),            0},
   {"renum",               (DL_FUNC) &F77_NAME(renum),              0},
-  {"main",                (DL_FUNC) &F77_NAME(main),               7},
+  {"main",                (DL_FUNC) &F77_NAME(main),               15},
   {"respak",              (DL_FUNC) &F77_NAME(respak),             0},
   {NULL, NULL, 0}
 };

@@ -29,133 +29,75 @@ C* fleming@csb.yale.edu
 C
 c********************************************************************
 
-       subroutine main (resnum, natm, a, b, c, iresf, iresl)
-
-       parameter (maxat = 50000, maxres=10000)
-
-       character*60 infile
-       character*130 cmd
-       character atype(maxat)*4
-       character restype(maxat)*3      !read_coords
-       character chain(maxres)*1			!read_coords
-       character aarestype(maxres)*3
-       character rayflag	!Flag for ray printing from surfcal
-				!Should by y or n
-
-       integer resnum(maxres), nchains, aa_per_chain,
-     & canum(maxres), natm      !see read_coords
-       integer iresf,iresl      !first and last residue to calculate
-       integer :: naa = 0                      !number of residues
-       integer ires                     !residue of interest
-       integer number
-       integer::kanala=110, kanalr=111
-       integer max
-
-       real x(3,maxat)          !see read_coords
-       double precision a(maxat)
-       double precision b(maxat)
-       double precision c(maxat)
-
-c20     format('   Residue(s) to calculate not in PDB file.')
-
-        do i = 1,maxres
-            chain(i) = ""
-c999     continue
-        end do
-
-        do i = 1,maxat
-            atype(i) = ""
-c999     continue
-        end do
-
-        do i = 1,maxat
-            restype(i) = ""
-c999     continue
-        end do
-        do i = 1,maxres
-            aarestype(i) = ""
-c999     continue
-        end do
-
-
-
-
-c Read os.fil for name of pdb file
-c       read(5,10) infile
-c        infile = "temp.pdb"
-
-c Read first and last residue numbers to be calculated
-c       read(5,*) iresf
-c       read(5,*) iresl
-c        iresf = 1
-c        iresl = 76
-
-c Read flag for printing of rays
-c       read(5,10) rayflag
-        rayflag = "n"
-
-c Open pdb file as unit=1
-       open (unit=1, file="temp.pdb", status='old')
-
-c Read pdb file and put info in arrays
-c Note: The CA residue numbers are not used but were
-c left in for future use.
-
-       call read_coords (atype,restype,chain,resnum,nchains,
-     &  aarestype,x,canum,natm,maxat,maxres,naa)
-c        print*, 'naa = ', naa
-
-c Close pdb file
-         close(unit=1)
-
-c Check that range of interest is in pdb file
-       if (iresf .lt. resnum(1)) then
-c         write(6,20)
-       else if (iresl .gt. resnum(natm)) then
-c         write(6,20)
-       end if
-
-       open(unit = kanala, file = 'atype.txt', status = 'unknown')
-       do I=1,maxat
-        if(atype(I)/="") then 
-           write(kanala,'(a)')atype(I)
+      subroutine main(resnum, natm, a, b, c, atype, restype, chain,
+     +              aarestype, iresf, iresl, atype_len, restype_len,
+     +              chain_len, aarestype_len)
+        implicit none
+      
+        ! Parameters
+        integer, parameter :: maxat = 50000
+        integer, parameter :: maxres = 10000
+      
+        ! Input/Output variables
+        integer, intent(inout) :: resnum(maxres)
+        integer, intent(inout) :: natm
+        double precision, intent(out) :: a(maxat), b(maxat), c(maxat)
+        character(len=*), intent(inout) :: atype(maxat)
+        character(len=*), intent(inout) :: restype(maxat)
+        character(len=*), intent(inout) :: chain(maxres)
+        character(len=*), intent(inout) :: aarestype(maxres)
+        
+        ! Input parameters
+        integer, intent(in) :: iresf
+        integer, intent(in) :: iresl
+        integer, intent(in) :: atype_len
+        integer, intent(in) :: restype_len
+        integer, intent(in) :: chain_len
+        integer, intent(in) :: aarestype_len
+        
+        ! Local variables
+        integer :: i
+        integer :: nchains
+        integer :: naa
+        integer :: canum(maxres)
+        real :: x(3, maxat)
+        
+        ! External procedures
+        external read_coords
+                
+        ! Initialize arrays
+        resnum = 0
+        a = 0.0d0
+        b = 0.0d0
+        c = 0.0d0
+        atype = ''
+        restype = ''
+        chain = ''
+        aarestype = ''
+        canum = 0
+        
+        ! Leitura de coordenadas do arquivo PDB
+        open(unit=1, file="temp.pdb", status='old')
+        call read_coords(atype, restype, chain, resnum, nchains,
+     +                 aarestype, x, canum, natm, maxat, maxres, naa)
+        close(unit=1)
+    
+        ! Verificação do intervalo de resíduos
+        if (iresf < resnum(1)) then
+            return
+        else if (iresl > resnum(natm)) then
+            return
         end if
-       end do!I
-       close(kanala)
-
-       open(unit = kanala, file = 'restype.txt', status = 'unknown')
-       do I=1,maxat
-        if(restype(I)/="") then
-           write(kanala,'(a)')restype(I)
-        end if
-       end do!I
-       close(kanala)
-
-       open(unit = kanala, file = 'chain.txt', status = 'unknown')
-       do I=1,maxres
-        if(chain(I)/="")then
-          write(kanala,'(a)')chain(I)
-        end if
-       end do!I
-       close(kanala)
-
-       open(unit = kanala, file = 'aarestype.txt', status = 'unknown')
-       do I=1,maxres
-        if(aarestype(I)/="") then
-          write(kanala,'(a)')aarestype(I)
-        end if
-       end do!I
-       
-       close(kanala)
-       
-       do I=1,maxat
-           a(I) = x(1,I)
-           b(I) = x(2,I)
-           c(I) = x(3,I)
-
-       end do
-
-       end subroutine main
+    
+        ! Transferência de coordenadas para vetores de saída
+        do i = 1, maxat
+            a(i) = x(1, i)
+            b(i) = x(2, i)
+            c(i) = x(3, i)
+        end do
+    
+        return
+      end subroutine main
 c--------------------------------------------------------------------
         subroutine main_intermediate(a, b, c, ires, resnum, natm)
             
