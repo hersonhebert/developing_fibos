@@ -29,6 +29,7 @@ C* fleming@csb.yale.edu
 C
 c********************************************************************
 
+<<<<<<< HEAD
       subroutine main(resnum, natm, a, b, c, atype, restype, chain,
      +              aarestype, iresf, iresl, atype_len, restype_len,
      +              chain_len, aarestype_len)
@@ -98,8 +99,154 @@ c********************************************************************
     
         return
       end subroutine main
+=======
+      subroutine main (resnum,natm,a,b,c,iresf,iresl,atype,restype,
+     &                chain,aarestype)
+
+
+C      subroutine main (resnum,natm,a,b,c,iresf,iresl,atype,restype,&
+C        &chain,aarestype)
+
+       parameter (maxat = 50000, maxres=10000)
+
+       character*60 infile
+       character*130 cmd
+       character atype(maxat)*4
+       character restype(maxat)*3      !read_coords
+       character chain(maxres)*1			!read_coords
+       character aarestype(maxres)*3
+       character rayflag	!Flag for ray printing from surfcal
+				!Should by y or n
+
+       integer resnum(maxres), nchains, aa_per_chain,
+     & canum(maxres), natm      !see read_coords
+       integer iresf,iresl      !first and last residue to calculate
+       integer :: naa = 0                      !number of residues
+       integer ires                     !residue of interest
+       integer number
+       integer::kanala=110, kanalr=111
+       integer max
+
+       real x(3,maxat)          !see read_coords
+       double precision a(maxat)
+       double precision b(maxat)
+       double precision c(maxat)
+
+c20     format('   Residue(s) to calculate not in PDB file.')
+
+c        do i = 1,maxres
+c            chain(i) = ""
+c999     continue
+c        end do
+c
+c        do i = 1,maxat
+c            atype(i) = ""
+c999     continue
+c        end do
+
+c        do i = 1,maxat
+c            restype(i) = ""
+c999     continue
+c        end do
+c        do i = 1,maxres
+c            aarestype(i) = ""
+c999     continue
+c        end do
+
+
+
+
+c Read os.fil for name of pdb file
+c       read(5,10) infile
+c        infile = "temp.pdb"
+
+c Read first and last residue numbers to be calculated
+c       read(5,*) iresf
+c       read(5,*) iresl
+c        iresf = 1
+c        iresl = 76
+
+c Read flag for printing of rays
+c       read(5,10) rayflag
+        rayflag = "n"
+
+c Open pdb file as unit=1
+       open (unit=1, file="temp.pdb", status='old')
+
+c Read pdb file and put info in arrays
+c Note: The CA residue numbers are not used but were
+c left in for future use.
+
+       call read_coords (atype,restype,chain,resnum,nchains,
+     &  aarestype,x,canum,natm,maxat,maxres,naa)
+c        print*, 'naa = ', naa
+
+c Close pdb file
+         close(unit=1)
+
+c Check that range of interest is in pdb file
+       if (iresf .lt. resnum(1)) then
+c         write(6,20)
+       else if (iresl .gt. resnum(natm)) then
+c         write(6,20)
+       end if
+
+c       open(unit = kanala, file = 'atype.txt', status = 'unknown')
+c       do I=1,maxat
+c        if(atype(I)/="") then 
+c           write(kanala,'(a)')atype(I)
+c           t = I
+c        else
+c           goto 100
+c        end if
+c       end do!I
+c100       close(kanala)
+
+c       open(unit = kanala, file = 'restype.txt', status = 'unknown')
+c       do I=1,maxat
+c        if(restype(I)/="") then
+c           write(kanala,'(a)')restype(I)
+c           h = I
+c        else
+c           goto 101
+c        end if
+c       end do!I
+c101       close(kanala)
+
+c       open(unit = kanala, file = 'chain.txt', status = 'unknown')
+c       do I=1,maxres
+c        if(chain(I)/="")then
+c          write(kanala,'(a)')chain(I)
+c          z = I
+c        else
+c          goto 102
+c        end if
+c       end do!I
+c102       close(kanala)
+
+c       open(unit = kanala, file = 'aarestype.txt', status = 'unknown')
+c       do I=1,maxres
+c        if(aarestype(I)/="") then
+c          write(kanala,'(a)')aarestype(I)
+c          r = I
+c        else
+c          goto 103
+c        end if
+c       end do!I
+       
+c103       close(kanala)
+       
+       do I=1,maxat
+           a(I) = x(1,I)
+           b(I) = x(2,I)
+           c(I) = x(3,I)
+
+       end do
+
+       end subroutine main
+>>>>>>> parent of b1ba7e0 (Revert "update")
 c--------------------------------------------------------------------
-        subroutine main_intermediate(a, b, c, ires, resnum, natm)
+        subroutine main_intermediate(a, b, c, ires, resnum,natm,t,h,z,r)
             
             parameter (maxat=50000, maxres=10000)
             
@@ -110,6 +257,8 @@ c--------------------------------------------------------------------
             real x(3,maxat)
 
             integer ires
+            integer t, h
+            integer z, r
             integer resnum(maxres)
             integer natm, I
             integer::stat=1
@@ -130,7 +279,7 @@ c           Write pdb records for residue of interest
 
             open(unit = kanala, file = "atype.txt", status="old")
             I = 1
-            do while ((stat >= 0) .and. (I <= maxat))
+            do while ((stat >= 0) .and. (I <= t))
                 read(kanala,'(a)', iostat=stat)atype(I)
                 I = I+1
             end do!I
@@ -139,7 +288,7 @@ c           Write pdb records for residue of interest
             open(unit = kanala, file = "restype.txt", status="old")
             I = 1
             stat = 1
-            do while ((stat >= 0) .and. (I <= maxat))
+            do while ((stat >= 0) .and. (I <= h))
                 read(kanala,'(a)', iostat=stat)restype(I)
                 I = I+1
             end do!I
@@ -148,7 +297,7 @@ c           Write pdb records for residue of interest
             open(unit = kanala, file = "chain.txt", status="old")
             I = 1
             stat = 1
-            do while ((stat >= 0) .and. (I <= maxres))
+            do while ((stat >= 0) .and. (I <= z))
                 read(kanala,'(a)', iostat=stat)chain(I)
                 I = I+1
             end do!I
@@ -157,7 +306,7 @@ c           Write pdb records for residue of interest
             open(unit = kanala, file = "aarestype.txt", status="old")
             I = 1
             stat = 1
-            do while ((stat >= 0) .and. (I <= maxres))
+            do while ((stat >= 0) .and. (I <= r))
                 read(kanala,'(a)', iostat=stat)aarestype(I)
                 I = I+1
             end do!I

@@ -134,10 +134,49 @@ occluded_surface = function(pdb, method = "FIBOS", verbose = FALSE){
         print("Descarregando fibos.dll.")
       }
     }
+<<<<<<< HEAD
     if(verbose == TRUE){
       print("Removendo arquivos.")
     }
     remove_files()
+=======
+#    if(verbose == TRUE){
+#      print("Removendo arquivos.")
+#    }
+#    remove_files()
+#    if(verbose == TRUE){
+#      print("Renomeando arquivos.")
+#    }
+#    name_prot = change_files(name_pdb)
+#    delete_pdb = fs::dir_ls(dest_temp,glob = "*.pdb")
+#    fs::file_delete(delete_pdb)
+#    if(verbose == TRUE){
+#      print("PDB deletado.")
+#    }
+#    final_dest = fs::path(source_path,"fibos_files")
+#    if(verbose == TRUE){
+#      print("Copiando .srf")
+#    }
+#    copy_files = fs::dir_ls(dest_temp,glob = "*.srf")
+#    if(verbose == TRUE){
+#      print("SRF copiado")
+#    }
+#    fs::file_copy(copy_files,final_dest, overwrite = TRUE)
+#    if(verbose == TRUE){
+#      print("Copiando .lst")
+#    }
+#    copy_files = fs::dir_ls(dest_temp,glob = "*.lst")
+#    fs::file_copy(copy_files,final_dest, overwrite = TRUE)
+#    if(verbose == TRUE){
+#      print("Definindo name_prot")
+#    }
+#    name_prot = fs::path(final_dest,name_prot)
+#    if(verbose == TRUE){
+#      print("Retornando tabela")
+##    }
+#    return(read_prot(name_prot))
+
+>>>>>>> parent of b1ba7e0 (Revert "update")
   })
 }
 

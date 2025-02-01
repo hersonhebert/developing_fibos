@@ -11,21 +11,29 @@ extern void F77_NAME(main_intermediate02)(int *);
 extern void F77_NAME(runsims)(int *);
 extern void F77_NAME(surfcal)(void);
 extern void F77_NAME(renum)(void);
+<<<<<<< HEAD
 extern void F77_NAME(main)(int *resnum, int *natm, double *x, double *y, double *z,
                      char *atype, char *restype, char *chain, char *aarestype,
                      int *iresf, int *iresl, int *atype_len, int *restype_len,
                      int *chain_len, int *aarestype_len);
+=======
+extern void F77_NAME(main)(int *, int *, double *, double *, double *, int *, int *, char *, char *, char *, char *);
+>>>>>>> parent of b1ba7e0 (Revert "update")
 extern void F77_NAME(respak)(void);
 
 /* Tabela de registro das funções Fortran */
 static const R_FortranMethodDef FortranEntries[] = {
-  {"main_intermediate",   (DL_FUNC) &F77_NAME(main_intermediate),   6},
+  {"main_intermediate",   (DL_FUNC) &F77_NAME(main_intermediate),  10},
   {"main_intermediate01", (DL_FUNC) &F77_NAME(main_intermediate01), 6},
   {"main_intermediate02", (DL_FUNC) &F77_NAME(main_intermediate02), 1},
   {"runSIMS",             (DL_FUNC) &F77_NAME(runsims),            1},
   {"surfcal",             (DL_FUNC) &F77_NAME(surfcal),            0},
   {"renum",               (DL_FUNC) &F77_NAME(renum),              0},
+<<<<<<< HEAD
   {"main",                (DL_FUNC) &F77_NAME(main),               15},
+=======
+  {"main",                (DL_FUNC) &F77_NAME(main),              11},
+>>>>>>> parent of b1ba7e0 (Revert "update")
   {"respak",              (DL_FUNC) &F77_NAME(respak),             0},
   {NULL, NULL, 0}
 };
