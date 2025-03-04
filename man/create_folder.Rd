@@ -8,7 +8,7 @@
 change_files(pdb_name)
 }
 \arguments{
-\item{pdb_name}{PDB File name}
+\item{pdb_name}{PDB File}
 }
 \description{
 Function for creating folders and manipulating files in the FIBOS system.

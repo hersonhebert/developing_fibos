@@ -1,8 +1,8 @@
 #' @title Files Manipulating.
 #' @name create_folder
 #' 
-#' @param pdb_name PDB File name
-#' 
+#' @param pdb_name PDB File
+#'
 #' @description Function for creating folders and manipulating files in the FIBOS system.
 #'
 #' @author Carlos Henrique da Silveira (carlos.silveira@unifei.edu.br)

@@ -192,7 +192,7 @@ c Argument declarations
 	character*40 fname
 	character*(*) prompt
 
-	write(6,100) prompt
+C	write(6,100) prompt
 	read(5,200) fname
 
 	if (age .eq. 'old') then

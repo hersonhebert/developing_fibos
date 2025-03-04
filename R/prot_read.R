@@ -29,7 +29,6 @@
 utils::globalVariables(c("X1", "X2", "X3", "X4", "X5", "X6"))
 
 read_prot = function(file){
-  X1 <- X2 <- X3 <- X4 <- X5 <- X6 <- NULL
   dado = read_fwf(file,show_col_types = FALSE)
   dado = filter(dado, X1 == "INF")
   dado$X7 = NULL

@@ -1,8 +1,11 @@
+PKG_FFLAGS = $(FPICFLAGS)
 PKG_LIBS = $(FLIBS)
 
-# Não sobrescrever flags do sistema
-PKG_FFLAGS = $(FPICFLAGS)
-
-# Usar variáveis do R para compilação
 FC = $(F77)
-FFLAGS = $(F77FLAGS)
+FFLAGS = $(F77FLAGS) -ffree-line-length-none -fno-backtrace -fno-automatic -fno-second-underscore
+
+%.o: %.f
+	$(FC) $(FFLAGS) $(PKG_FFLAGS) -c $< -o $@
+
+# For Windows compilation
+PKG_CFLAGS = $(CFLAGS)

@@ -78,10 +78,10 @@ C               SINCE IT IS USED AS A PASSED LENGTH STRING. FNAME IS
 C               A LOCALLY DEFINED CONSTANT CURRENTLY SET AT 30.
 C                                                             
 C                                                             
-        WRITE(6,600) prompt
+C        WRITE(6,600) prompt
 c        READ(5,500) FNAME
         FNAME = "temp1.cln"
-        write(6,610)
+C        write(6,610)
 
         IF ( ( age .EQ. 'old' ) .OR. ( age .EQ. 'OLD' ) ) THEN
             OPEN ( UNIT = lunit, FILE = fname, STATUS = 'OLD')

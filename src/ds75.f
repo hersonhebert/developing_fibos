@@ -3856,7 +3856,7 @@ c
 	implicit none
 
 	integer N
-	integer:: kanalz=140
+	integer::kanalz = 120
 	real*8 RI
         REAL*8 U(3,*)
 	real*8 AR(*),TET(*)
@@ -3989,7 +3989,7 @@ c
 
 	implicit none
 	integer N,NC
-	integer::kanalz=140
+	integer::kanalz = 120
 
 	REAL*8 RI
         REAL*8 U(3,NC,N)
@@ -4251,7 +4251,7 @@ c
             integer k
             real phi_1, phi_2
             real area_dot
-            integer::kanalz=140
+            integer::kanalz = 120
             out_xyz = .true.
             area_dot = (4*pi*RI**2)/N
 
@@ -9455,7 +9455,7 @@ c
         integer ichash
 c
 	if(ictot.eq.nclist) then
-	  write(6,*)'charge list full- increase nclist'
+C	  write(6,*)'charge list full- increase nclist'
 	  stop
 	end if
 
@@ -9561,7 +9561,7 @@ c
 c check to see if there is room
 c
 	if(irtot.eq.nrlist) then
-	  write(6,*)' radii list full- increase nrlist'
+C	  write(6,*)' radii list full- increase nrlist'
 	  stop
 	end if
 

@@ -2,7 +2,7 @@ PKG_FFLAGS = $(FPICFLAGS)
 PKG_LIBS = $(FLIBS)
 
 FC = gfortran
-FFLAGS = -O2 -fno-second-underscore -fbacktrace
+FFLAGS = -O2 -fno-second-underscore -fno-automatic -ffree-line-length-none -fno-backtrace
 
 %.o: %.f
 	$(FC) $(FFLAGS) $(PKG_FFLAGS) -c $< -o $@

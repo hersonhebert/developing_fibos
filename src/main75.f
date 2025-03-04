@@ -29,83 +29,7 @@ C* fleming@csb.yale.edu
 C
 c********************************************************************
 
-<<<<<<< HEAD
-      subroutine main(resnum, natm, a, b, c, atype, restype, chain,
-     +              aarestype, iresf, iresl, atype_len, restype_len,
-     +              chain_len, aarestype_len)
-        implicit none
-      
-        ! Parameters
-        integer, parameter :: maxat = 50000
-        integer, parameter :: maxres = 10000
-      
-        ! Input/Output variables
-        integer, intent(inout) :: resnum(maxres)
-        integer, intent(inout) :: natm
-        double precision, intent(out) :: a(maxat), b(maxat), c(maxat)
-        character(len=*), intent(inout) :: atype(maxat)
-        character(len=*), intent(inout) :: restype(maxat)
-        character(len=*), intent(inout) :: chain(maxres)
-        character(len=*), intent(inout) :: aarestype(maxres)
-        
-        ! Input parameters
-        integer, intent(in) :: iresf
-        integer, intent(in) :: iresl
-        integer, intent(in) :: atype_len
-        integer, intent(in) :: restype_len
-        integer, intent(in) :: chain_len
-        integer, intent(in) :: aarestype_len
-        
-        ! Local variables
-        integer :: i
-        integer :: nchains
-        integer :: naa
-        integer :: canum(maxres)
-        real :: x(3, maxat)
-        
-        ! External procedures
-        external read_coords
-                
-        ! Initialize arrays
-        resnum = 0
-        a = 0.0d0
-        b = 0.0d0
-        c = 0.0d0
-        atype = ''
-        restype = ''
-        chain = ''
-        aarestype = ''
-        canum = 0
-        
-        ! Leitura de coordenadas do arquivo PDB
-        open(unit=1, file="temp.pdb", status='old')
-        call read_coords(atype, restype, chain, resnum, nchains,
-     +                 aarestype, x, canum, natm, maxat, maxres, naa)
-        close(unit=1)
-    
-        ! Verificação do intervalo de resíduos
-        if (iresf < resnum(1)) then
-            return
-        else if (iresl > resnum(natm)) then
-            return
-        end if
-    
-        ! Transferência de coordenadas para vetores de saída
-        do i = 1, maxat
-            a(i) = x(1, i)
-            b(i) = x(2, i)
-            c(i) = x(3, i)
-        end do
-    
-        return
-      end subroutine main
-=======
-      subroutine main (resnum,natm,a,b,c,iresf,iresl,atype,restype,
-     &                chain,aarestype)
-
-
-C      subroutine main (resnum,natm,a,b,c,iresf,iresl,atype,restype,&
-C        &chain,aarestype)
+       subroutine main (resnum, natm, a, b, c, iresf, iresl)
 
        parameter (maxat = 50000, maxres=10000)
 
@@ -121,10 +45,11 @@ C        &chain,aarestype)
        integer resnum(maxres), nchains, aa_per_chain,
      & canum(maxres), natm      !see read_coords
        integer iresf,iresl      !first and last residue to calculate
-       integer :: naa = 0                      !number of residues
+       integer::naa = 0                      !number of residues
        integer ires                     !residue of interest
        integer number
-       integer::kanala=110, kanalr=111
+       integer::kanala = 110
+       integer kanalr
        integer max
 
        real x(3,maxat)          !see read_coords
@@ -134,24 +59,24 @@ C        &chain,aarestype)
 
 c20     format('   Residue(s) to calculate not in PDB file.')
 
-c        do i = 1,maxres
-c            chain(i) = ""
+        do i = 1,maxres
+            chain(i) = ""
 c999     continue
-c        end do
-c
-c        do i = 1,maxat
-c            atype(i) = ""
-c999     continue
-c        end do
+        end do
 
-c        do i = 1,maxat
-c            restype(i) = ""
+        do i = 1,maxat
+            atype(i) = ""
 c999     continue
-c        end do
-c        do i = 1,maxres
-c            aarestype(i) = ""
+        end do
+
+        do i = 1,maxat
+            restype(i) = ""
 c999     continue
-c        end do
+        end do
+        do i = 1,maxres
+            aarestype(i) = ""
+c999     continue
+        end do
 
 
 
@@ -191,50 +116,38 @@ c         write(6,20)
 c         write(6,20)
        end if
 
-c       open(unit = kanala, file = 'atype.txt', status = 'unknown')
-c       do I=1,maxat
-c        if(atype(I)/="") then 
-c           write(kanala,'(a)')atype(I)
-c           t = I
-c        else
-c           goto 100
-c        end if
-c       end do!I
-c100       close(kanala)
+       open(unit = kanala, file = 'atype.txt', status = 'unknown')
+       do I=1,maxat
+        if(atype(I)/="") then 
+           write(kanala,'(a)')atype(I)
+        end if
+       end do!I
+       close(kanala)
 
-c       open(unit = kanala, file = 'restype.txt', status = 'unknown')
-c       do I=1,maxat
-c        if(restype(I)/="") then
-c           write(kanala,'(a)')restype(I)
-c           h = I
-c        else
-c           goto 101
-c        end if
-c       end do!I
-c101       close(kanala)
+       open(unit = kanala, file = 'restype.txt', status = 'unknown')
+       do I=1,maxat
+        if(restype(I)/="") then
+           write(kanala,'(a)')restype(I)
+        end if
+       end do!I
+       close(kanala)
 
-c       open(unit = kanala, file = 'chain.txt', status = 'unknown')
-c       do I=1,maxres
-c        if(chain(I)/="")then
-c          write(kanala,'(a)')chain(I)
-c          z = I
-c        else
-c          goto 102
-c        end if
-c       end do!I
-c102       close(kanala)
+       open(unit = kanala, file = 'chain.txt', status = 'unknown')
+       do I=1,maxres
+        if(chain(I)/="")then
+          write(kanala,'(a)')chain(I)
+        end if
+       end do!I
+       close(kanala)
 
-c       open(unit = kanala, file = 'aarestype.txt', status = 'unknown')
-c       do I=1,maxres
-c        if(aarestype(I)/="") then
-c          write(kanala,'(a)')aarestype(I)
-c          r = I
-c        else
-c          goto 103
-c        end if
-c       end do!I
+       open(unit = kanala, file = 'aarestype.txt', status = 'unknown')
+       do I=1,maxres
+        if(aarestype(I)/="") then
+          write(kanala,'(a)')aarestype(I)
+        end if
+       end do!I
        
-c103       close(kanala)
+       close(kanala)
        
        do I=1,maxat
            a(I) = x(1,I)
@@ -244,9 +157,8 @@ c103       close(kanala)
        end do
 
        end subroutine main
->>>>>>> parent of b1ba7e0 (Revert "update")
 c--------------------------------------------------------------------
-        subroutine main_intermediate(a, b, c, ires, resnum,natm,t,h,z,r)
+        subroutine main_intermediate(a, b, c, ires, resnum, natm)
             
             parameter (maxat=50000, maxres=10000)
             
@@ -257,12 +169,10 @@ c--------------------------------------------------------------------
             real x(3,maxat)
 
             integer ires
-            integer t, h
-            integer z, r
             integer resnum(maxres)
             integer natm, I
-            integer::stat=1
-            integer::kanala=110
+            integer::stat = 0
+            integer::kanala = 110
 
             character atype(maxat)*4, restype(maxat)*3      !read_coords
             character aarestype(maxres)*3
@@ -279,7 +189,7 @@ c           Write pdb records for residue of interest
 
             open(unit = kanala, file = "atype.txt", status="old")
             I = 1
-            do while ((stat >= 0) .and. (I <= t))
+            do while ((stat >= 0) .and. (I <= maxat))
                 read(kanala,'(a)', iostat=stat)atype(I)
                 I = I+1
             end do!I
@@ -288,7 +198,7 @@ c           Write pdb records for residue of interest
             open(unit = kanala, file = "restype.txt", status="old")
             I = 1
             stat = 1
-            do while ((stat >= 0) .and. (I <= h))
+            do while ((stat >= 0) .and. (I <= maxat))
                 read(kanala,'(a)', iostat=stat)restype(I)
                 I = I+1
             end do!I
@@ -297,7 +207,7 @@ c           Write pdb records for residue of interest
             open(unit = kanala, file = "chain.txt", status="old")
             I = 1
             stat = 1
-            do while ((stat >= 0) .and. (I <= z))
+            do while ((stat >= 0) .and. (I <= maxres))
                 read(kanala,'(a)', iostat=stat)chain(I)
                 I = I+1
             end do!I
@@ -306,7 +216,7 @@ c           Write pdb records for residue of interest
             open(unit = kanala, file = "aarestype.txt", status="old")
             I = 1
             stat = 1
-            do while ((stat >= 0) .and. (I <= r))
+            do while ((stat >= 0) .and. (I <= maxres))
                 read(kanala,'(a)', iostat=stat)aarestype(I)
                 I = I+1
             end do!I
@@ -339,8 +249,8 @@ c--------------------------------------------------------------------
        integer::naa = 0                      !number of residues
        integer ires                     !residue of interest
        integer number
-       integer::stat=1
-       integer :: kanala=110
+       integer::stat = 0
+       integer::kanala = 110
 
        real x(3,maxat)          !see read_coords
        double precision a(maxat)
@@ -493,7 +403,7 @@ c      parameter (maxat=50000, maxres=10000)
 
 c Local declarations
 
-       integer lunit, icrd, i
+       integer lunit, icrd, i, naa
 
        character fname*30, prompt*30, oldchain*1
 
@@ -521,7 +431,7 @@ c Scroll to first atom in PDB file.
        do while (scrollerror)
          call pdbscroll (lunit, 'ATOM', scrollerror)
          if (scrollerror) then
-           write(6,20)
+C           write(6,20)
            close (lunit)
          else
 c Start reading atoms
@@ -532,7 +442,7 @@ c Start reading atoms
              read(lunit,5,end=100)line
              if (line(1:4) .ne. 'ATOM') then
                if (line(1:3) .eq. 'TER') then
-                 write(6,30)
+C                 write(6,30)
                  goto 90
                else if (line(1:3) .eq. 'END') then
 c                 write(6,35)
@@ -554,7 +464,7 @@ c Look for CA
                end if
                aarestype(resnum(n))=restype(n) !3-letter code
                if (naa .gt. maxres)then
-                 write(6,25)
+C                 write(6,25)
                  goto 999
                end if
                if (chain(n) .ne. oldchain) then

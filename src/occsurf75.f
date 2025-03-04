@@ -108,10 +108,10 @@ c Arrive here when eof reached on prot.srf file
 888	continue
 
 c Write the protein summary in prot.eval
-        write(6,40) itotres
-        write(6,42) ptact
-        write(6,44) ptide
-        write(6,46) ptact/ptide
+C        write(6,40) itotres
+C        write(6,42) ptact
+C        write(6,44) ptide
+C        write(6,46) ptact/ptide
  
 	end
 c****************************************************************
@@ -136,7 +136,7 @@ C
 	   go to 11
 	endif
 10	continue
-	    print *, ' Error in Amino acid ident ', strng(1:3)
+C	    print *, ' Error in Amino acid ident ', strng(1:3)
 	    stop
 11	continue
 	onelc = aa1c(ival)
@@ -214,7 +214,7 @@ c This
 	      go to 20
 	   endif
 10	continue
-	print *, ' Error Does not match in getsfe routine '
+C	print *, ' Error Does not match in getsfe routine '
 	stop
 20	continue
 	sfdeaai = sfe(iaa)	!Total surface area of res
@@ -231,8 +231,8 @@ c This
 	if(sr .gt. 0.8 .and. sr .le. 0.9) iptr = 9
 	if(sr .gt. 0.9 .and. sr .le. 1.0) iptr = 10
 	if(iptr.eq.0)then
-	   print *,' Error in iptr = ',iptr,sr,bstotal,estotal,iaa,
-     &           a1c(iaa)
+C	   print *,' Error in iptr = ',iptr,sr,bstotal,estotal,iaa,
+C     &           a1c(iaa)
 	   stop
 	endif
 

@@ -11,35 +11,43 @@ osp(file)
 }
 \value{
 A table containing:
+\describe{
 \item{\code{Resnum}}{residue id.}
 \item{\code{Resname}}{residue name.}
 \item{\code{OS}}{the summed areas of dots in residue.}
-\item{\code{`os*[1-raylen]`}}{OS areas weighted by (1-raylen). Raylen is the average lengths of normals normalized by 2.8 \eqn{\AA} (water diameter). So, raylen is a value between 0 and 1. A raylen close to 1 indicates worse packaging, and the OS will be reduced.}
+\item{\code{`os*[1-raylen]`}}{OS areas weighted by (1-raylen). Raylen is the average lengths of normals normalized by 2.8 \eqn{\text{\AA}} (water diameter). So, raylen is a value between 0 and 1. A raylen close to 1 indicates worse packaging, and the OS will be reduced.}
 \item{\code{OSP}}{average occluded surface packing value (OSP) by residue.}
 }
+}
 \description{
-Implements the occluded surface packing density metric (OSP) averaged by residue, as described in (Fleming and Richards 2000).
+{Implements the occluded surface packing density metric (OSP) averaged by residue, as described in (Fleming and Richards 2000).}
 }
 \examples{
-
 library(fibos)
 
 # Calculate FIBOS per atom and create .srf files in fibos_files folder
-pdb_fibos <- occluded_surface("1fib", method = "FIBOS")
+pdb_fibos <- occluded_surface("8rxn", method = "FIBOS")
+
 # Calculate OSP metric per residue from .srf file in fibos_files folder
-pdb_osp <- osp(fs::path("fibos_files","prot_1fib.srf"))
+pdb_osp <- osp(fs::path("fibos_files","prot_8rxn.srf"))
 
 }
 \references{
-Fleming PJ, Richards FM. Protein packing: Dependence on protein size, secondary structure and amino acid composition. J Mol Biol 2000;299:487-98.(\doi{https://doi.org/10.1006/jmbi.2000.3750})
+Fleming PJ, Richards FM. Protein packing: Dependence on protein size, secondary structure and amino acid composition. J Mol Biol 2000;299:487-98.(\doi{10.1006/jmbi.2000.3750})
 
-Pattabiraman N, Ward KB, Fleming PJ. Occluded molecular surface: Analysis of protein packing. J Mol Recognit 1995;8:334-44. (\doi{https://doi.org/10.1002/jmr.300080603})
+Pattabiraman N, Ward KB, Fleming PJ. Occluded molecular surface: Analysis of protein packing. J Mol Recognit 1995;8:334-44. (\doi{10.1002/jmr.300080603})
 
-Herson H. M. Soares, Joao P. R. Romanelli, Patrick J. Fleming, Carlos H. da Silveira. bioRxiv, 2024.11.01.621530. (\doi{https://doi.org/10.1101/2024.11.01.621530})
+Herson H. M. Soares, Joao P. R. Romanelli, Patrick J. Fleming, Carlos H. da Silveira. bioRxiv, 2024.11.01.621530. (\doi{10.1101/2024.11.01.621530})
 }
 \seealso{
-\link{occluded_surface}
+\code{\link[=occluded_surface]{occluded_surface()}}
 }
 \author{
-Herson Soares, Joao Romanelli, Patrick Fleming, Carlos Silveira.
+Herson Soares
+
+Joao Romanelli
+
+Patrick Fleming
+
+Carlos Silveira.
 }

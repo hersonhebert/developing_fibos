@@ -61,7 +61,7 @@ c**********************************************************************
        character*9 dumyc1,predumy
        integer resno,secsq,numat,seqcd,first,rayflag
        integer dummy
-       integer::kanal=130
+       integer::kanal = 115
        character *3 resn,secnm
 
 
@@ -108,7 +108,7 @@ c part_i.ms
 
 c read the first line of "part.inp"
 c if 0, no ray file, if 1, write ray display file
-        print *,path
+C        print *,path
         open(unit=kanal,file='part.inp',status='old')
 
         read(kanal,"(a)")rayflag
@@ -143,8 +143,8 @@ c check if residue i is n-ter or c-ter
 	if(resinf(4)(1:5).eq. '     ') icter = 1 !c-terminal
 
 c display on screen residue being calculated
-        write(6,57)resinf(3)
-57      format(5x,a13)
+C        write(6,57)resinf(3)
+C57      format(5x,a13)
 
 c readin the vdw radii
 	call assvdw(attype,vdwr,nvdwt,restyp)
@@ -211,8 +211,8 @@ c
 c      to check for alternate conformation
 c
          if(line(17:17) .ne. ' ')then
-           print *, ' alternate conformation is present.  check '
-           print *,line(1:22)
+C           print *, ' alternate conformation is present.  check '
+C           print *,line(1:22)
 	   stop
          endif
 
@@ -258,7 +258,7 @@ c last the 1 letter atoms
 1257     continue
 c        print *, line(13:15), vdwrad(natom)
          if(vdwrad(natom).le.0.001)then
-           print *, ' Atom not found in radii file  ',natom
+C           print *, ' Atom not found in radii file  ',natom
            stop
          endif
 c
@@ -270,7 +270,7 @@ c      write(6,120) atnm(natom),resn,resno,resext,(cr(natom,l),l=1,3)
 
          if(resno.gt.99) then
            if(resext.ne.' '.and.chainid.ne.' ')then
-             print *, ' you may have to reorder the residus numbers'
+C             print *, ' you may have to reorder the residus numbers'
              stop
            endif
          endif
@@ -539,7 +539,7 @@ c and add it to exposed surf area bin
 1109         format(9x,a4,31x,f6.3)
 
 c            write(6,1110) atname,areapt
-1110         format('xx',a4,'xx',f6.3)
+C1110         format('xx',a4,'xx',f6.3)
 c but bail out if buried
              if(ipick(ip).eq.1) go to 1902 !if buried
 
@@ -802,8 +802,8 @@ c last the 1 letter atoms
 1258     continue
 1259     continue
          if(sprvdw.le.0.001)then
-           print *, ' sphere vdwrad is zero '
-           print *, line
+C           print *, ' sphere vdwrad is zero '
+C           print *, line
            stop
          endif
 
